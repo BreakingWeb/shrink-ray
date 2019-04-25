@@ -24,7 +24,6 @@ const util         = require('util');
 const vary         = require('vary');
 const Writable     = require('stream').Writable;
 const zlib         = require('zlib');
-const zopfli       = require('node-zopfli-es');
 
 /**
  * Module exports.
@@ -474,7 +473,7 @@ BufferDuplex.prototype._write = function (chunk, encoding, callback) {
 function getBestQualityReencoder(coding) {
   switch (coding) {
     case 'gzip':
-      return multipipe(zlib.createGunzip(), zopfli.createGzip());
+      return multipipe(zlib.createGunzip());
     case 'deflate':
       // for some reason, re-encoding with deflate makes some tests fail on
       // the travis machines. until we can figure this out, just offer a passthrough,
